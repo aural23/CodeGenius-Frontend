@@ -1,1 +1,56 @@
-<p>login works!</p>
+<div class="all">
+    <!-- Create Account -->
+    <form class="container" *ngIf="isSignIn==false else elseBlock"  (ngSubmit)="onSignUp()">
+        <p class="heading">
+            Registration
+        </p>
+        <div>
+            <p class="label">Username</p>
+            <input class="inputFields" type="text" formControlName="username" placeholder="Enter Username Here ">
+        </div>
+        <div>
+            <p class="label">Enter Email</p>
+            <input class="inputFields" type="text" formControlName="email" placeholder="Enter Your Email Here ">
+
+        </div>
+        <div>
+            <p class="label">Enter Password</p>
+            <input class="inputFields" type="password" formControlName="password"
+                placeholder="Enter your password here ">
+        </div>
+        <div class=" btnContainer">
+            <button class="btn" type="submit">
+                Create Account
+            </button>
+            <p class="label hand" (click)="onCreateAccount_p()">sign in
+            </p>
+        </div>
+    </form>
+
+    <!-- sign in -->
+    <ng-template #elseBlock>
+        <form class="container"  (ngSubmit)="onSignIn()">
+            <p class="heading">
+                Sign In
+            </p>
+            <div>
+                <p class="label">Enter Email</p>
+                <input class="inputFields" type="text" formControlName="email" placeholder="Enter Contact Email Here ">
+
+            </div>
+            <div>
+                <p class="label">Enter Password</p>
+                <input class="inputFields" type="password" formControlName="password"
+                    placeholder="Enter your password here ">
+            </div>
+            <div class=" btnContainer">
+                <button class="btn" style="text-decoration: none;">
+                    Sign In
+                </button>
+            </div>
+            <p class="label hand" (click)="onClicksignIn_p()">
+                Create Account
+            </p>
+        </form>
+    </ng-template>
+</div>

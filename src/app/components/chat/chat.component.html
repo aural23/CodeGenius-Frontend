@@ -11,19 +11,20 @@
             </div>
             <ul class="list-unstyled chat-list mt-2 mb-0">
                 <li class="clearfix" *ngFor="let item of listData">
-                    
-                    <img src="./assets/img/{{ item.name }}.jpg" alt="profile picture">
-                    <div class="about">
-                        <div class="name"> {{ item.name }} </div>
-                        <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
+                    <div (click)="loadChat(item._id)">
+                        <img src="./assets/img/{{ item.name }}.jpg" alt="profile picture">
+                        <div class="about">
+                            <div class="name"> {{ item.name }} </div>
+                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
+                        </div>
                     </div>
                 </li>
             </ul>
 
 
             <div class="col-lg-12 hidden-sm text-right justify-content-end">
-              <a  href="/friends" class="btn btn-outline-secondary"><i class="fa fa-user-plus"></i></a>
-              <a href="/friends" class="btn btn-outline-primary"><i class="fa fa-users"></i></a>
+              <a  href="/friends" class="btn btn-outline-secondary">Delete or Add Friends<i class="fa fa-user-plus"></i></a>
+              <!-- <a href="/friends" class="btn btn-outline-primary"><i class="fa fa-users"></i></a> -->
           </div>
         </div>
         <div class="chat">
@@ -31,28 +32,29 @@
                 <div class="row">
                     <div>
                         <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                            <img src="./assets/img/laura.jpg" alt="profile picture" class="profile-picture">
+                            <img [src]="imgProfilePicture" alt="profile picture" class="profile-picture">
                         </a>
                         <div class="chat-about">
-                            <h4>Laura</h4>
+                            <h4>{{ strNombre }}</h4>
                             <h5 class="status">Last seen: 2 hours ago</h5>
                         </div>
                         <div class="d-flex flex-row-reverse">
-                        <a href="/login" class="btn btn-outline-danger"><i class="fa fa-ban"></i></a>
-                        <a href="/friends" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
+                        <a href="/login" class="btn btn-outline-danger">Logout<i class="fa fa-ban"></i></a>
+                        <!-- <a href="/friends" class="btn btn-outline-warning"><i class="fa fa-question"></i></a> -->
                       </div>
                     </div>
                 </div>
             </div>
             <div class="chat-history">
                 <ul class="m-b-0">
-                    <li class="clearfix">
+                    <li class="clearfix" *ngFor="let item of chatHistory">
                         <div class="message-data text-right">
-                            <span class="chat-date">Today</span>
+                            <span class="chat-date">{{ item.createdAt }}</span>
                         </div>
-                        <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                        <div class="message other-message float-right">{{ item.chat_text }} </div>
                     </li>
-                    <li class="clearfix">
+
+                    <!-- <li class="clearfix">
                         <div class="message-data">
                             <span class="message-data-time">10:12 AM, Today</span>
                         </div>
@@ -63,14 +65,14 @@
                             <span class="message-data-time">10:15 AM, Today</span>
                         </div>
                         <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="chat-message clearfix">
               <div class="input-group mb-0">
-                  
-                  <input type="text" class="form-control" placeholder="Enter text here...">     
-                  <div class="input-group-prepend">
+                  <form></form>
+                  <input type="text" [value]="strTextToSend" (input)="updateText($event)"  class="form-control"   >     
+                  <div class="input-group-prepend" (click)="sendComment()" >
                     <span class="input-group-text" ><i class="fa fa-send fa-2x"></i></span>
                 </div>                            
               </div>
