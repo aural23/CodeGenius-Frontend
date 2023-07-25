@@ -1,11 +1,16 @@
 <div class="all">
-    <form class="container"  (ngSubmit)="onSignIn()">
+    <!-- Create Account -->
+    <form class="container" *ngIf="isSignIn==false else elseBlock" [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
         <p class="heading">
-            Sign In
+            Registration
         </p>
         <div>
+            <p class="label">Username</p>
+            <input class="inputFields" type="text" formControlName="username" placeholder="Enter Username Here ">
+        </div>
+        <div>
             <p class="label">Enter Email</p>
-            <input class="inputFields" type="text" formControlName="email" placeholder="Enter Contact Email Here ">
+            <input class="inputFields" type="text" formControlName="email" placeholder="Enter Your Email Here ">
 
         </div>
         <div>
@@ -14,12 +19,38 @@
                 placeholder="Enter your password here ">
         </div>
         <div class=" btnContainer">
-            <button class="btn" style="text-decoration: none;">
-                Sign In
-            </button>
-            <a class="label hand" routerLink="/register">
+            <button class="btn" type="submit">
                 Create Account
-            </a>
+            </button>
+            <p class="label hand" (click)="onCreateAccount_p()">sign in
+            </p>
         </div>
     </form>
+
+    <!-- sign in -->
+    <ng-template #elseBlock>
+        <form class="container" [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+            <p class="heading">
+                Sign In
+            </p>
+            <div>
+                <p class="label">Enter Username</p>
+                <input class="inputFields" type="text" formControlName="username" placeholder="Enter Username Here ">
+
+            </div>
+            <div>
+                <p class="label">Enter Password</p>
+                <input class="inputFields" type="password" formControlName="password"
+                    placeholder="Enter your password here ">
+            </div>
+            <div class=" btnContainer">
+                <button class="btn" style="text-decoration: none;">
+                    Sign In
+                </button>
+                <a class="label hand" routerLink="/register">
+                    Create Account
+                </a>
+            </div>
+        </form>
+    </ng-template>
 </div>
