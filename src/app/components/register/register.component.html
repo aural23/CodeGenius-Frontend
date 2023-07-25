@@ -1,1 +1,26 @@
-<p>register works!</p>
+<form class="container" [formGroup]="signUpForm" (ngSubmit)="proceedregistration()">
+    <p class="heading">
+        Registration
+    </p>
+    <div>
+        <p class="label">Username</p>
+        <input class="inputFields" type="text" formControlName="name" placeholder="Enter Username Here ">
+    </div>
+    <div>
+        <p class="label">Enter Email</p>
+        <input class="inputFields" type="text" formControlName="user_id" placeholder="Enter Your Email Here ">
+
+    </div>
+    <div>
+        <p class="label">Enter Password</p>
+        <input class="inputFields" type="password" formControlName="user_password"
+            placeholder="Enter your password here ">
+    </div>
+    <div class=" btnContainer">
+        <button class="btn" type="submit">
+            Create Account
+        </button>
+        <a class="label hand" routerLink="/login">sign in
+        </a>
+    </div>
+</form>

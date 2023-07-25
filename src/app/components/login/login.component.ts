@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,23 +15,8 @@ export class LoginComponent {
     password: new FormControl('')
   })
 
-  signUpForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    username: new FormControl('')
-  })
-
   constructor(private router:Router){
 
-  }
-  onSignUp() {
-    console.log(this.signUpForm.value)  
-      this.router.navigate(['/contacts'])
-
-  }
-
-  get formControlSignUpForm() {
-    return this.signUpForm.controls;
   }
 
   get formControlLoginForm() {
@@ -41,12 +26,6 @@ export class LoginComponent {
 
     console.log("vales-=-------", this.signInForm.value.password)
     this.router.navigate(['/contacts'])
-  }
-  onClicksignIn_p() {
-    this.isSignIn = false
-  }
-  onCreateAccount_p() {
-    this.isSignIn = true
   }
 
 }

@@ -48,4 +48,11 @@ export class UserService {
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
   }
+  Proceedregister(inputdata:any): Observable<any> {
+    return this._http.post('http://localhost:4000/users/', inputdata, {
+      observe: 'body',
+      withCredentials:true,
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+    }
 }
