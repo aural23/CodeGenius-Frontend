@@ -10,6 +10,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { ChatComponent } from './components/chat/chat.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,11 +19,13 @@ import { ChatComponent } from './components/chat/chat.component';
     RegisterComponent,
     FriendsComponent,
     ChatComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoute)
   ],
   providers: [],

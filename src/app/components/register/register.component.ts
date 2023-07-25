@@ -30,11 +30,11 @@ export class RegisterComponent {
     if (this.signUpForm.valid) {
       const formData = this.signUpForm.value;
       this.service.Proceedregister(formData).subscribe(
-        (response) => {
+        (response: any) => {
           alert('User registration successful. Please proceed to login.');
           this.router.navigate(['login']);
         },
-        (error) => {
+        (error: any) => {
           alert('Error occurred while registering user. Please try again.');
         }
       );
