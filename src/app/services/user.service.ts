@@ -49,7 +49,7 @@ export class UserService {
     });
   }
   Proceedregister(inputdata:any): Observable<any> {
-    return this._http.post('http://localhost:4000/users/', inputdata, {
+    return this._http.post('https://code-genius-backend.onrender.com/users/', inputdata, {
       observe: 'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
