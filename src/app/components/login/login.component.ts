@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,58 +13,70 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   isSignIn: boolean = false;
 
-  signInForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+
+  constructor(private router:Router,private builder:FormBuilder, private service:UserService,
+    private AuthService:AuthService){
+
+      sessionStorage.clear();
+
+  }
+
+  userdata:any;
+
+  signInForm = this.builder.group({
+    username:this.builder.control('',Validators.required),
+    password:this.builder.control('',Validators.required)
+
   })
 
-  signUpForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    username: new FormControl('')
-  })
+  // onSignIn_a(){
+  //   if(this.signInForm.valid){
+  //     this.service.(this.signInForm.value.username).subscribe(res => {
+  //       this.userdata=res;
+  //       console.log(this.userdata);
 
-  constructor(private router:Router,
-    private authService:AuthService){
+  //     })
+  //   }
 
-
-  }
-  onSignUp() {
-    console.log(this.signUpForm.value)  
-      this.router.navigate(['/contacts'])
-
-  }
-
-  get formControlSignUpForm() {
-    return this.signUpForm.controls;
-  }
-
-  get formControlLoginForm() {
-    return this.signInForm.controls;
-  }
+  // }
   
   onSignIn() {
    if(this.signInForm.valid){
     let username = this.signInForm.value.username || '';
-    let password = this.signInForm.value.password || '';
-    this.authService.login(username, password).then((success) => {
-      if (success) {
-        // Authentication successful
-        alert("user login succesfully...")
-        this.router.navigate(['/contacts'])
+    this.AuthService.login(username).subscribe(res =>{
+      this.userdata=res;
+      console.log("RESPONSE",this.userdata);
+      console.log(this.userdata[0].user_password);
+      console.log(this.signInForm.value.password);
+      if(this.userdata[0].user_password === this.signInForm.value.password){
+        sessionStorage.setItem('user_id',this.userdata[0]._id);
+        sessionStorage.setItem('user_name',this.userdata[0].user_id);
+        this.router.navigate(['chat']);
 
-      } else {
-        // Authentication failed
-        alert("Invalid Credentials...")
-        console.log('Invalid credentials');
+      }else{
+        alert('Invalid password')
       }
-    });
-   }
+    })
+    
+  //   .then((success) => {
+  //     if (success) {
+  //       // Authentication successful
+  //       alert("user login succesfully...")
+  //       this.router.navigate(['/contacts'])
+
+  //     } else {
+  //       // Authentication failed
+  //       alert("Invalid Credentials...")
+  //       console.log('Invalid credentials');
+  //     }
+  //   });
+  //  }
+  // }
+  // onClicksignIn_p() {
+  //   this.isSignIn = false
+  // }
+  // onCreateAccount_p() {
+  //   this.isSignIn = true
   }
-  onClicksignIn_p() {
-    this.isSignIn = false
-  }
-  onCreateAccount_p() {
-    this.isSignIn = true
-  }
+}
 }
