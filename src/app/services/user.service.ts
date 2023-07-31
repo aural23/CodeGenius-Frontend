@@ -22,7 +22,7 @@ export class UserService {
     return this._http.get('http://localhost:4000/users/' + id, {
       observe: 'body',
       withCredentials: true,
-      headers: new HttpHeaders().append('Content-Type', 'application/json')
+      headers: new HttpHeaders().append('Content-Type', 'application/json'),
     });
   }
 
@@ -55,5 +55,8 @@ export class UserService {
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
-    }
+  }
+
+  
+  
 }
