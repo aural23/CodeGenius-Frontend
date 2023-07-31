@@ -10,7 +10,7 @@ export class UserService {
   constructor(private _http: HttpClient) { }
 
   getUsers() {
-    return this._http.get('https://code-genius-backend.onrender.com/users', {
+    return this._http.get('http://localhost:4000/users', {
       observe: 'body',
       withCredentials: true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
@@ -19,7 +19,7 @@ export class UserService {
 
 
   getUser(id: String) {
-    return this._http.get('https://code-genius-backend.onrender.com/users/' + id, {
+    return this._http.get('http://localhost:4000/users/' + id, {
       observe: 'body',
       withCredentials: true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   getChat(user_loged: String, user_requested: String) {
-    return this._http.get('https://code-genius-backend.onrender.com/chats/' + user_loged+"/"+ user_requested, {
+    return this._http.get('http://localhost:4000/chats/' + user_loged+"/"+ user_requested, {
       observe: 'body',
       withCredentials: true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   getChatDetail(id: String) {
-    return this._http.get('https://code-genius-backend.onrender.com/chatDetails/' + id, {
+    return this._http.get('http://localhost:4000/chatDetails/' + id, {
       observe: 'body',
       withCredentials: true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
@@ -43,14 +43,14 @@ export class UserService {
   }
 
   postComment(body:any){
-    return this._http.post('https://code-genius-backend.onrender.com/chatDetails/', body, {
+    return this._http.post('http://localhost:4000/chatDetails/', body, {
       observe: 'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
   }
   Proceedregister(inputdata:any): Observable<any> {
-    return this._http.post('https://code-genius-backend.onrender.com/users/', inputdata, {
+    return this._http.post('http://localhost:4000/users/', inputdata, {
       observe: 'body',
       withCredentials:true,
       headers: new HttpHeaders().append('Content-Type', 'application/json')
