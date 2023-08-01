@@ -11,17 +11,20 @@ export class ChatService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor() {}
 
-  socket = io('http://localhost:4200');
+  socket = io('http://localhost:4000');
+  public login(strUser: String){
+    this.socket.emit('send-nickname', strUser);
+  }
 
-  // public sendMessage(message) {
-  //   this.socket.emit('message', message);
-  // }
+  public sendMessage(message: any) {
+    this.socket.emit('message', message);
+  }
 
-  public getNewMessage = () => {
-    this.socket.on('message', (message) =>{
-      this.message$.next(message);
+  public getNewMessage(): Observable<string> {
+    return new Observable((observer) => {
+      this.socket.on('message', (message) => {
+        observer.next(message);
+      });
     });
-    
-    return this.message$.asObservable();
-  };
+  }
 }

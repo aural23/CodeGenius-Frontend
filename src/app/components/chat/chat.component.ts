@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,18 +18,30 @@ export class ChatComponent implements OnInit {
   strTextToSend: String;
   strCurrentChat: String;
   strCurrentUser: String;
+  strUser: String;
+  newMessage: string;
+  messageList: string[] = [];
 
 
-  constructor(private _router: Router, private _userService: UserService) {
+  constructor(private _router: Router, private _userService: UserService, private chatService: ChatService) {
     this.imgProfilePicture = "";
     this.strNombre = "";
     this.strCurrentChat = "";
     this.strTextToSend = "";
-    this.strCurrentChat = "";
-    this.strCurrentUser = ""
+    this.strCurrentUser = "";
+    this.newMessage = "";
+    this.strUser = sessionStorage.getItem("user_id") ?? "";
   }
 
   ngOnInit() {
+
+    this.chatService.login(this.strUser);
+
+    this.chatService.getNewMessage().subscribe((message: string) => {
+      this.messageList.push(message);
+    })
+
+
     this._userService.getUsers().subscribe(
       (data) => {
         this.listData = data;
@@ -39,6 +52,12 @@ export class ChatComponent implements OnInit {
     );
   }
 
+  // sendMessage() {
+  //   this.chatService.sendMessage(this.newMessage);
+  //   this.newMessage = '';
+  // }
+
+  
   loadChat(id: String) {
 
     this.strCurrentUser = id;
@@ -48,9 +67,7 @@ export class ChatComponent implements OnInit {
           console.log(response);
           this.imgProfilePicture = "./assets/img/" + response.name + ".jpg";
           this.strNombre = response.name;
-
-
-          this._userService.getChat("64af5036d298092368817d73", response._id)
+          this._userService.getChat(sessionStorage.getItem("user_id")?? '', response._id)
             .subscribe(
               (chat: any) => {
                 //console.log(chat);
@@ -66,8 +83,6 @@ export class ChatComponent implements OnInit {
               },
               error => console.error(error)
             );
-
-
         },
         error => console.error(error)
       );
@@ -80,7 +95,6 @@ export class ChatComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     this.strTextToSend = target.value;
   }
-
 
   sendComment() {
     console.log(this.strTextToSend.toString());
@@ -99,6 +113,8 @@ export class ChatComponent implements OnInit {
           },
           error => console.error(error)
         );
+        this.chatService.sendMessage(this.strTextToSend);
+        this.strTextToSend = '';
    }
   }
 

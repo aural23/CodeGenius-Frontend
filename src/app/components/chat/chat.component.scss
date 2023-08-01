@@ -1,37 +1,29 @@
-body{
+body {
     background-color: #f4f7f6;
-    margin-top:20px;
-    font-family:Arial, Helvetica, sans-serif;
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
-// .card {
-//     background: #fff;
-//     transition: .5s;
-//     border: 0;
-//     margin-bottom: 30px;
-//     border-radius: .55rem;
-//     position: absolute;
-//     width: 100%;
-//     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-// }
 
 header {
     background-color: #7971c9 !important;
 }
+
 .banner {
     //width: 1420px;
     height: 400;
     display: block;
     margin-left: auto;
     margin-right: auto;
-   
+
 }
+
 .chat-app .people-list {
-    width: 260px;
+    width: 300px;
     position: absolute;
     left: 0;
     top: 0;
     padding: 20px;
-    z-index: 7
+    z-index: 7;
 }
 
 .chat-app .chat {
@@ -43,7 +35,9 @@ header {
     -moz-transition: .5s;
     -o-transition: .5s;
     -webkit-transition: .5s;
-    transition: .5s
+    transition: .5s;
+    height: 550px;
+    overflow-y: scroll;
 }
 
 .people-list .chat-list li {
@@ -108,6 +102,8 @@ header {
 }
 
 .chat .chat-history {
+    height: 400px;
+    overflow-y: scroll;
     padding: 20px;
     border-bottom: 2px solid #fff
 }
@@ -192,7 +188,7 @@ header {
 }
 
 .chat .chat-history .other-message {
-    background:#8e86e5;
+    background: #8e86e5;
     text-align: right
 }
 
@@ -247,15 +243,19 @@ header {
         left: -400px;
         display: none
     }
+
     .chat-app .people-list.open {
         left: 0
     }
+
     .chat-app .chat {
         margin: 0
     }
+
     .chat-app .chat .chat-header {
         border-radius: 0.55rem 0.55rem 0 0
     }
+
     .chat-app .chat-history {
         height: 300px;
         overflow-x: auto
@@ -267,6 +267,7 @@ header {
         height: 650px;
         overflow-x: auto
     }
+
     .chat-app .chat-history {
         height: 600px;
         overflow-x: auto
@@ -278,6 +279,7 @@ header {
         height: 480px;
         overflow-x: auto
     }
+
     .chat-app .chat-history {
         height: calc(100vh - 350px);
         overflow-x: auto
@@ -301,7 +303,7 @@ header {
     width: 30px;
     height: 30;
     margin-top: 10px;
-    float:left;
+    float: left;
     transition: transform 0.3s ease;
 }
 
@@ -313,12 +315,12 @@ header {
     transition: transform 0.3s ease;
 }
 
-.AddPhotos:hover, 
+.AddPhotos:hover,
 .AddFiles:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
-.profile-picture{
+.profile-picture {
     width: 50px;
     height: 50px;
     margin-top: 10px;
