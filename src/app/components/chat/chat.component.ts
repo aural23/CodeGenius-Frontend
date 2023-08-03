@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { race } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -58,38 +59,36 @@ export class ChatComponent implements OnInit {
   // }
 
   
-  loadChat(id: String) {
+  // loadChat(id: String) {
 
-    this.strCurrentUser = id;
-    this._userService.getUser(id)
-      .subscribe(
-        (response: any) => {
-          console.log(response);
-          this.imgProfilePicture = "./assets/img/" + response.name + ".jpg";
-          this.strNombre = response.name;
-          this._userService.getChat(sessionStorage.getItem("user_id")?? '', response._id)
-            .subscribe(
-              (chat: any) => {
-                //console.log(chat);
-                this.strCurrentChat = chat._id;
-                this._userService.getChatDetail(chat._id)
-                  .subscribe(
-                    (detail: any) => {
-                      //console.log(detail);
-                      this.chatHistory = detail;
-                    },
-                    error => console.error(error)
-                  );
-              },
-              error => console.error(error)
-            );
-        },
-        error => console.error(error)
-      );
+  //   this.strCurrentUser = id;
+  //   this._userService.getUser(id)
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log(response);
+  //         this.imgProfilePicture = "./assets/img/" + response.name + ".jpg";
+  //         this.strNombre = response.name;
+  //         this._userService.getChat(sessionStorage.getItem("user_id")?? '', response._id)
+  //           .subscribe(
+  //             (chat: any) => {
+  //               //console.log(chat);
+  //               this.strCurrentChat = chat._id;
+  //               this._userService.getChatDetail(chat._id)
+  //                 .subscribe(
+  //                   (detail: any) => {
+  //                     //console.log(detail);
+  //                     this.chatHistory = detail;
+  //                   },
+  //                   error => console.error(error)
+  //                 );
+  //             },
+  //             error => console.error(error)
+  //           );
+  //       },
+  //       error => console.error(error)
+  //     );
 
-
-
-  }
+  //  }
 
   updateText(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -116,6 +115,43 @@ export class ChatComponent implements OnInit {
         this.chatService.sendMessage(this.strTextToSend);
         this.strTextToSend = '';
    }
+  }
+
+
+  loadChat(id: String) {
+    this.strCurrentUser = id;
+    this._userService.getUser(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.imgProfilePicture = "./assets/img/" + response.name + ".jpg";
+        this.strNombre = response.name;
+  
+        // Observables for checking both chats
+        const chatObservable1 = this._userService.getChat(sessionStorage.getItem("user_id") ?? '', response._id);
+        const chatObservable2 = this._userService.getChat(response._id, sessionStorage.getItem("user_id") ?? '');
+  
+        race([chatObservable1, chatObservable2]).subscribe(
+          (chat: any) => {
+            if (chat) {
+              // Chat exists, load it
+              this.strCurrentChat = chat._id;
+              this._userService.getChatDetail(chat._id).subscribe(
+                (detail: any) => {
+                  this.chatHistory = detail;
+                },
+                error => console.error(error)
+              );
+            } else {
+              // Both chats don't exist
+              console.log("No chat exists for both conditions.");
+              // Handle the case if needed.
+            }
+          },
+          error => console.error(error)
+        );
+      },
+      error => console.error(error)
+    );
   }
 
 }
